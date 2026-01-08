@@ -1,16 +1,26 @@
 import Task from "../Task/Task";
+import { useDroppable } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { useState } from "react";
 
-export default function Taskblock({ status }) {
+export default function Taskblock({ status, tasks }) {
     return (
         <div className="taskblock">
             <div className="taskblock-title">
                 <h2>{status}</h2>
             </div>
             <div className="taskblock-tasks">
-                <Task />
-                <Task />
-                <Task />
+                <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
+                    {tasks.map((task, index) => (
+                        <Task
+                            key={task.id}
+                            id={task.id}
+                            tags={task.tags}
+                            description={task.description}
+                        />
+                    ))}
+                </SortableContext>
             </div>
         </div>
-    )
-};
+    );
+}
