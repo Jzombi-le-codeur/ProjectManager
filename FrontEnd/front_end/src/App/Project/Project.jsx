@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect} from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "../../Styles/project.css";
 import Taskblock from "../../Components/Task/Taskblock/Taskblock";
 import { DndContext, closestCorners } from "@dnd-kit/core";
@@ -14,47 +15,19 @@ function reformat_status_name(status) {
 }
 
 export default function Project() {
-    const [tasks, setTasks] = useState({
-        to_do: [
-            { id: "to_do-task-1", tags: ["Tag 1", "Tag 2", "Tag 3"], description: "Faire la tâche 1" },
-            { id: "to_do-task-2", tags: ["Tag 1", "Tag 2", "Tag 3"], description: "Faire la tâche 2" },
-            { id: "to_do-task-3", tags: ["Tag 1", "Tag 2", "Tag 3"], description: "Faire la tâche 3" },
-        ],
-        in_progress: [
-            { id: "in_progress-task-1", tags: ["Tag 1", "Tag 2", "Tag 3"], description: "Faire la tâche 1" },
-            { id: "in_progress-task-2", tags: ["Tag 1",  "Tag 2", "Tag 3"], description: "Faire la tâche 2" },
-            { id: "in_progress-task-3", tags: ["Tag 1", "Tag 2", "Tag 3"], description: "Faire la tâche 3" },
-        ],
-        review: [
-            { id: "review_task-1", tags: ["Tag 1", "Tag 2", "Tag 3"], description: "Faire la tâche 1" },
-            { id: "review_task-2", tags: ["Tag 1", "Tag 2", "Tag 3"], description: "Faire la tâche 2" },
-            { id: "review_task-3", tags: ["Tag 1", "Tag 2", "Tag 3"], description: "Faire la tâche 3" },
-        ],
-        done: [
-            { id: "done_task-1", tags: ["Tag 1", "Tag 2", "Tag 3"], description: "Faire la tâche 1" },
-            { id: "done_task-2", tags: ["Tag 1", "Tag 2", "Tag 3"], description: "Faire la tâche 2" },
-            { id: "done_task-3", tags: ["Tag 1", "Tag 2", "Tag 3"], description: "Faire la tâche 3" },
-        ]
-    });
+    const [tasks, setTasks] = useState({});
+
     const columns = Object.keys(tasks);
 
-    // const getTaskPos = id => tasks.findIndex(task => task.id === id);
-    //
-    // const handleDragEnd = event => {
-    //     const { active, over } = event;
-    //
-    //     // Rien retourner si la position n'a pas changée
-    //     if (active.id === over.id) {
-    //         return
-    //     };
-    //
-    //     setTasks(tasks => {
-    //         const originalPos = getTaskPos(active.id);
-    //         const newPos = getTaskPos(over.id);
-    //
-    //         return arrayMove(tasks, originalPos, newPos);
-    //     })
-    // }
+    // Récupérer le nom du projet
+    const { project_name } = useParams();
+
+    useEffect(() => {
+        fetch(`http://127.0.0.1:5000/api/get_project/${project_name}`)
+            .then((response) => response.json())
+            .then((data) => {setTasks(data.content)})
+            .catch((error) => console.log(error));
+    }, [])
 
     // Trouve la colonne où est la tâche
     const findColumn = (id) => {
@@ -145,7 +118,7 @@ export default function Project() {
     return (
         <div className="project-page">
             <div className="project-meta">
-                <h2 className="project-name">Project Name</h2>
+                <h2 className="project-name">{project_name}</h2>
             </div>
 
             <div className="project-content">

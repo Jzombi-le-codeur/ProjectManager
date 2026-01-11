@@ -8,12 +8,10 @@ class Projects:
         self.project = dict()
 
     def get_project(self, project_name) -> dict:
-        if os.path.exists(pathlib.PurePath(self.projects_dir_path, f"{project_name}.json")):
-            with open(pathlib.PurePath(self.projects_dir_path, f"{project_name}.json"), "r") as project_file:
+        project_file_path = pathlib.PurePath(self.projects_dir_path, f"{project_name}.json")
+        if os.path.exists(project_file_path):
+            with open(project_file_path, "r", encoding="utf-8") as project_file:
                 return json.load(project_file)
 
         else:
             return "File not found"
-
-    def get_projects(self):
-        with open()
