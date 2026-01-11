@@ -7,7 +7,7 @@ export default function Taskblock({ status, tasks, taskblock_id }) {
     const { setNodeRef } = useDroppable({
         id: taskblock_id,
     })
-    return (
+    return (    
         <div className="taskblock">
             <div className="taskblock-title">
                 <h2>{status}</h2>
