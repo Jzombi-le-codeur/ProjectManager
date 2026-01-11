@@ -22,7 +22,7 @@ export default function Project() {
         ],
         in_progress: [
             { id: "in_progress-task-1", tags: ["Tag 1", "Tag 2", "Tag 3"], description: "Faire la tâche 1" },
-            { id: "in_progress-task-2", tags: ["Tag 1", "Tag 2", "Tag 3"], description: "Faire la tâche 2" },
+            { id: "in_progress-task-2", tags: ["Tag 1",  "Tag 2", "Tag 3"], description: "Faire la tâche 2" },
             { id: "in_progress-task-3", tags: ["Tag 1", "Tag 2", "Tag 3"], description: "Faire la tâche 3" },
         ],
         review: [
