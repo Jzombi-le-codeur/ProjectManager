@@ -66,3 +66,19 @@
     margin: 0;
     width: 80%;
 }
+
+.task-adder {
+    background-color: #5c5d5e;
+    transition: background-color 0.1s;
+    border-radius: 0.5rem;
+    padding: 1rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.task-adder:hover {
+    background-color: #aaa9a9;
+    cursor: pointer;
+}
