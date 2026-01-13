@@ -126,6 +126,21 @@ export default function Project() {
                     }));
                 }
             }
+
+            // Sauvegarder les modifications
+            fetch("http://127.0.0.1:5000/api/update_project", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "project_name": project_name,
+                    "content": {"title": project_title, "tasks": tasks}
+                }),
+            })
+                .then((response) => response.json())
+                .then((data) => {console.log(data.content)})
+                .catch((error) => console.log(error));
         };
 
         return (

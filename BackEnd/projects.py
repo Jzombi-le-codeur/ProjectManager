@@ -7,11 +7,23 @@ class Projects:
         self.projects_dir_path = pathlib.Path("Projects\\Projects")
         self.project = dict()
 
-    def get_project(self, project_name) -> dict:
+    def get_project(self, project_name: str) -> dict | str:
         project_file_path = pathlib.PurePath(self.projects_dir_path, f"{project_name}.json")
         if os.path.exists(project_file_path):
             with open(project_file_path, "r", encoding="utf-8") as project_file:
                 return json.load(project_file)
+
+        else:
+            return "File not found"
+
+    def save_project(self, project_name: str, content: dict) -> str:
+        project_file_path = pathlib.PurePath(self.projects_dir_path, f"{project_name}.json")
+        if os.path.exists(project_file_path):
+            with open(project_file_path, "w", encoding="utf-8") as project_file:
+                # Sauvegarder le contenu du projet
+                json.dump(content, project_file)
+
+            return "OK"
 
         else:
             return "File not found"
