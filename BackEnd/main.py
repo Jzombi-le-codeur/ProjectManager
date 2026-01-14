@@ -33,7 +33,7 @@ def get_project(project_name):
     else:
         return "Uh"
 
-@app.route("/api/update_project", methods=["PUT"])
+@app.route("/api/update_project", methods=["PUT", "POST"])
 def update_project():
     # Vérifier si on veut modifier une info du projet
     if request.method == "PUT":
@@ -46,7 +46,7 @@ def update_project():
 
     # Si on veut créer une tâche
     elif request.method == "POST":
-        pass
+        print("test")
 
     return jsonify({"type": "response", "content": "OK"})
 

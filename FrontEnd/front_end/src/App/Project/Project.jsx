@@ -160,6 +160,8 @@ export default function Project() {
                                         taskblock_id={column}
                                         status={status}
                                         tasks={tasks[column]}
+                                        globalTasks={tasks}
+                                        setGlobalTasks={setTasks}
                                     />
                                 })
                             }
