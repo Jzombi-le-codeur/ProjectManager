@@ -33,9 +33,15 @@ class Projects:
         self.project = self.get_project(project_name=project_name)
         tasks = [task for column in self.project["tasks"].values() for task in column]
         tasks = pd.DataFrame(tasks)
-        max_id = pd.to_numeric(tasks['id']).max()
-        task = {"id": str(max_id+1), "tags": [], "description": "Tâche"}
-        self.project["tasks"][column].insert(0, task)
+        try:
+            max_id = pd.to_numeric(tasks['id']).max()
+            task = {"id": str(max_id+1), "tags": [], "description": "Tâche"}
+            self.project["tasks"][column].insert(0, task)
+
+        except KeyError:
+            task = {"id": str(1), "tags": [], "description": "Tâche"}
+            self.project["tasks"][column].append(task)
+
         self.save_project(project_name=project_name, content=self.project)
         return task
 
