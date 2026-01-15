@@ -65,6 +65,7 @@ export default function Task({ id, tags, description, refreshProject, project_na
                                 onBlur={() => changeDescription()}
                                 onKeyDown={handleKeyDown}
                                 autoFocus={true}
+                                onFocus={(event) => event.target.select()}
                             />
                         )
                     }
