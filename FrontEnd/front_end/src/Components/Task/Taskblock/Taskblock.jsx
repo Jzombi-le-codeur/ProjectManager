@@ -22,6 +22,8 @@ export default function Taskblock({ status, tasks, taskblock_id, project_name, r
                             id={task.id}
                             tags={task.tags}
                             description={task.description}
+                            refreshProject={refreshProject}
+                            project_name={project_name}
                         />
                     ))}
                 </SortableContext>

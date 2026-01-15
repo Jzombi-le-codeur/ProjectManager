@@ -44,9 +44,13 @@
     border-radius: 0.5rem;
     padding: 0.5rem 0.5rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 1rem;
     min-height: 4rem;
+}
+
+.task-content {
+    flex-basis: 95%;
 }
 
 .task-tag {
@@ -66,6 +70,11 @@
 .task-description p {
     margin: 0;
     width: 80%;
+}
+
+.task-drag-handle {
+    display: flex;
+    align-items: center;
 }
 
 .task-adder {

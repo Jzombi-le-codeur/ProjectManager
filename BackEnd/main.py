@@ -60,7 +60,10 @@ def add_task():
 @app.route("/api/change_task", methods=["PUT"])
 def change_task():
     data = request.get_json()
-    print(data)
+    id = data["content"]["id"]
+    description = data["content"]["description"]
+    project_name = data["content"]["project_name"]
+    projects.change_task(id=id, description=description, project_name=project_name)
     return jsonify({"type": "response", "content": "OK"})
 
 
