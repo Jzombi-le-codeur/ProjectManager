@@ -47,7 +47,6 @@ def change_tasks_order():
 def add_task():
     if request.method == "POST":
         data = request.get_json()
-        print("DATA ", data)
         column = data["content"]["column"]
         project_name = data["content"]["project_name"]
 
