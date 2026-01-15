@@ -36,6 +36,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    min-height: 1rem;
 }
 
 .task {
@@ -43,8 +44,13 @@
     border-radius: 0.5rem;
     padding: 0.5rem 0.5rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 1rem;
+    min-height: 4rem;
+}
+
+.task-content {
+    flex-basis: 95%;
 }
 
 .task-tag {
@@ -64,4 +70,25 @@
 .task-description p {
     margin: 0;
     width: 80%;
+}
+
+.task-drag-handle {
+    display: flex;
+    align-items: center;
+}
+
+.task-adder {
+    background-color: #5c5d5e;
+    transition: background-color 0.1s;
+    border-radius: 0.5rem;
+    padding: 1rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.task-adder:hover {
+    background-color: #aaa9a9;
+    cursor: pointer;
 }
