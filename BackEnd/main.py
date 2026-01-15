@@ -7,8 +7,6 @@ app = Flask(__name__)
 projects = Projects()
 
 
-from flask_cors import CORS
-
 CORS(
     app,
     resources={r"/api/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:5000"]}},
@@ -33,23 +31,39 @@ def get_project(project_name):
     else:
         return "Uh"
 
-@app.route("/api/update_project", methods=["PUT", "POST"])
-def update_project():
+@app.route("/api/change_tasks_order", methods=["PUT"])
+def change_tasks_order():
     # Vérifier si on veut modifier une info du projet
-    if request.method == "PUT":
+    data = request.get_json()
+    project_name = data["project_name"]
+    project_content = data["content"]
+
+    # Sauvegarder le projet
+    projects.save_project(project_name=project_name, content=project_content)
+
+    return jsonify({"type": "response", "content": "OK"})
+
+@app.route("/api/add_task", methods=["POST"])
+def add_task():
+    if request.method == "POST":
         data = request.get_json()
-        project_name = data["project_name"]
-        project_content = data["content"]
+        print("DATA ", data)
+        column = data["content"]["column"]
+        project_name = data["content"]["project_name"]
 
-        # Sauvegarder le projet
-        projects.save_project(project_name=project_name, content=project_content)
+        task = projects.add_task(column=column, project_name=project_name)
 
-    # Si on veut créer une tâche
-    elif request.method == "POST":
-        print("test")
+        return jsonify({"type": "message", "content": "OK"})
 
+    return jsonify({"type": "error", "content": "Couldn't create task"})
+
+
+@app.route("/api/change_task", methods=["PUT"])
+def change_task():
+    data = request.get_json()
+    print(data)
     return jsonify({"type": "response", "content": "OK"})
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

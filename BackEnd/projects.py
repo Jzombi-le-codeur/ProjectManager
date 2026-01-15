@@ -21,9 +21,16 @@ class Projects:
         if os.path.exists(project_file_path):
             with open(project_file_path, "w", encoding="utf-8") as project_file:
                 # Sauvegarder le contenu du projet
-                json.dump(content, project_file)
+                json.dump(content, project_file, indent=4)
 
             return "OK"
 
         else:
             return "File not found"
+
+    def add_task(self, column: str, project_name: str) -> dict:
+        task = {"id": "aaaaaa", "tags": [], "description": ""}
+        self.project = self.get_project(project_name=project_name)
+        self.project["tasks"][column].insert(0, task)
+        self.save_project(project_name=project_name, content=self.project)
+        return task

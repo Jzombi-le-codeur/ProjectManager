@@ -22,7 +22,7 @@ export default function Project() {
     // Récupérer le nom du projet
     const { project_name } = useParams();
 
-    useEffect(() => {
+    const refreshProject = () => {
         fetch(`http://127.0.0.1:5000/api/get_project/${project_name}`)
             .then((response) => response.json())
             .then((data) => {
@@ -34,6 +34,10 @@ export default function Project() {
                 }
             })
             .catch((error) => console.log(error));
+    }
+
+    useEffect(() => {
+        refreshProject();
     }, [])
 
     // Si les données ont été chargées
@@ -128,7 +132,7 @@ export default function Project() {
             }
 
             // Sauvegarder les modifications
-            fetch("http://127.0.0.1:5000/api/update_project", {
+            fetch("http://127.0.0.1:5000/api/change_tasks_order", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -160,8 +164,8 @@ export default function Project() {
                                         taskblock_id={column}
                                         status={status}
                                         tasks={tasks[column]}
-                                        globalTasks={tasks}
-                                        setGlobalTasks={setTasks}
+                                        project_name={project_name}
+                                        refreshProject={refreshProject}
                                     />
                                 })
                             }
