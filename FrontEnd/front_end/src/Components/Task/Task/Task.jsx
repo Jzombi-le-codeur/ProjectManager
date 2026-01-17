@@ -1,7 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
-import trashIcon from "../../../Assets/trash-icon.png";
 
 export default function Task({ id, tags, description, refreshProject, project_name }) {
     const [editingDescription, setEditingDescription] = useState(false);
