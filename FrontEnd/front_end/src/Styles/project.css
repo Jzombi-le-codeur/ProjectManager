@@ -96,7 +96,7 @@
     padding: 0;
 }
 
-.task-more {
+.task-options {
     width: 1.5rem;
     height: 1.5rem;
     display: flex;
@@ -104,16 +104,15 @@
     align-items: center;
 }
 
-.task-more p {
-    margin: auto;
-    padding: 0;
-}
-
-.task-more:hover {
+.task-options:hover {
     transition: background-color 0.1s;
     background-color: lightgray;
     border-radius: 50%;
     cursor: pointer;
+}
+
+.task-options-options {
+    padding: 0 0.5rem
 }
 
 .task-adder {

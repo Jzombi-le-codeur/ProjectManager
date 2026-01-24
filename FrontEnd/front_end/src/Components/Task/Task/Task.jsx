@@ -1,10 +1,13 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
+import { Dropdown, Space } from 'antd';
+import TaskOptions from "../TaskOptions/TaskOptions";
 
 export default function Task({ id, tags, description, refreshProject, project_name }) {
     const [editingDescription, setEditingDescription] = useState(false);
     const [currentDescription, setCurrentDescription] = useState(description);
+    const [optionsShown, setOptionsShown] = useState(false);
 
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
         id: id,
@@ -75,11 +78,7 @@ export default function Task({ id, tags, description, refreshProject, project_na
                         }
                     </div>
                 </div>
-                <div className="task-actions">
-                    <div className="task-more">
-                        <p>⋮</p>
-                    </div>
-                </div>
+                <TaskOptions setEditingDescription={setEditingDescription} />
             </div>
         </div>
     )
