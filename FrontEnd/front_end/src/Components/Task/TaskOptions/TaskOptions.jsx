@@ -2,7 +2,7 @@ import { Dropdown, Space } from 'antd';
 import {useState} from "react";
 
 
-export default function TaskOptions({ setEditingDescription }) {
+export default function TaskOptions({ setEditingDescription, removeTask }) {
     const [menuOpened, setMenuOpened] = useState(false);
     const items = [
         {
@@ -23,6 +23,12 @@ export default function TaskOptions({ setEditingDescription }) {
                 <p>Supprimer</p>
             ),
             style: {color: "#ff0033", padding: "0 0.5rem"},
+            onClick: ({ domEvent }) => {
+                domEvent.preventDefault();
+                domEvent.stopPropagation();
+                removeTask();
+            }
+
         }
     ]
 

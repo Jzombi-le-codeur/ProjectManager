@@ -54,3 +54,15 @@ class Projects:
                 break
 
         self.save_project(project_name=project_name, content=self.project)
+
+    def remove_task(self, id: str, project_name: str):
+        self.project = self.get_project(project_name=project_name)
+        tasks = [task for column in self.project["tasks"].values() for task in column]
+        for task in tasks:
+            if task["id"] == id:
+                print(task["id"], id)
+                for column in self.project["tasks"].keys():
+                    for task_og in self.project["tasks"][column]:
+                        if task_og["id"] == id:
+                            del self.project["tasks"][column][self.project["tasks"][column].index(task_og)]
+                            self.save_project(project_name=project_name, content=self.project)
