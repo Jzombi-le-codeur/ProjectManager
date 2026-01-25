@@ -1,10 +1,13 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
+import { Dropdown, Space } from 'antd';
+import TaskOptions from "../TaskOptions/TaskOptions";
 
 export default function Task({ id, tags, description, refreshProject, project_name }) {
     const [editingDescription, setEditingDescription] = useState(false);
     const [currentDescription, setCurrentDescription] = useState(description);
+    const [optionsShown, setOptionsShown] = useState(false);
 
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
         id: id,
@@ -26,7 +29,7 @@ export default function Task({ id, tags, description, refreshProject, project_na
         fetch("http://127.0.0.1:5000/api/change_task", {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({id: "message", content: {id: id, description: currentDescription, project_name: project_name}})
+            body: JSON.stringify({type: "message", content: {id: id, description: currentDescription, project_name: project_name}})
         })
         .then(res => res.json())
         .then(data => {
@@ -36,43 +39,60 @@ export default function Task({ id, tags, description, refreshProject, project_na
         .catch(err => console.log(err));
     }
 
+    const removeTask = () => {
+        fetch("http://127.0.0.1:5000/api/remove_task", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({type: "message", content: {id: id, project_name: project_name}})
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                refreshProject();
+            })
+            .catch(err => console.log(err));
+    }
+
     return (
         <div ref={setNodeRef} style={style} className="task">
-            <div className="task-content">
-                <div className="task-tag">
-                    {tags.map((tag, index) => {
-                        if (index === 0) {
-                            return <p className={"tag tag-start"} key={`tag-${id}-${index}`}>{tag}</p>
-                        } else if (index === tags.length - 1) {
-                            return <p className={"tag tag-end"} key={`tag-${id}-${index}`}>{tag}</p>
-                        } else {
-                            return <p className={"tag"} key={`tag-${id}-${index}`}>{tag}</p>
-                        }
-                    })}
-                </div>
-                <div className="task-description" onDoubleClick={(event) => {
-                    event.stopPropagation();
-                    setEditingDescription(true);
-                }}>
-                    {
-                        !editingDescription ? (
-                            <p>{ currentDescription }</p>
-                        ) : (
-                            <input
-                                type={"text"}
-                                value={currentDescription}
-                                onChange={(e) => setCurrentDescription(e.target.value)}
-                                onBlur={() => changeDescription()}
-                                onKeyDown={handleKeyDown}
-                                autoFocus={true}
-                                onFocus={(event) => event.target.select()}
-                            />
-                        )
-                    }
-                </div>
-            </div>
             <div className="task-drag-handle" {...listeners} {...attributes} style={{ cursor: "grab" }}>
                 <p>⠿</p>
+            </div>
+            <div className="task-main">
+                <div className="task-content">
+                    <div className="task-tag">
+                        {tags.map((tag, index) => {
+                            if (index === 0) {
+                                return <p className={"tag tag-start"} key={`tag-${id}-${index}`}>{tag}</p>
+                            } else if (index === tags.length - 1) {
+                                return <p className={"tag tag-end"} key={`tag-${id}-${index}`}>{tag}</p>
+                            } else {
+                                return <p className={"tag"} key={`tag-${id}-${index}`}>{tag}</p>
+                            }
+                        })}
+                    </div>
+                    <div className="task-description" onDoubleClick={(event) => {
+                        event.stopPropagation();
+                        setEditingDescription(true);
+                    }}>
+                        {
+                            !editingDescription ? (
+                                <p>{ currentDescription }</p>
+                            ) : (
+                                <input
+                                    type={"text"}
+                                    value={currentDescription}
+                                    onChange={(e) => setCurrentDescription(e.target.value)}
+                                    onBlur={() => changeDescription()}
+                                    onKeyDown={handleKeyDown}
+                                    autoFocus={true}
+                                    onFocus={(event) => event.target.select()}
+                                />
+                            )
+                        }
+                    </div>
+                </div>
+                <TaskOptions setEditingDescription={setEditingDescription} removeTask={removeTask} />
             </div>
         </div>
     )

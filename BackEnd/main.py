@@ -66,6 +66,14 @@ def change_task():
     projects.change_task(id=id, description=description, project_name=project_name)
     return jsonify({"type": "response", "content": "OK"})
 
+@app.route("/api/remove_task", methods=["POST"])
+def remove_task():
+    data = request.get_json()
+    id = data["content"]["id"]
+    project_name = data["content"]["project_name"]
+    projects.remove_task(id=id, project_name=project_name)
+    return jsonify({"type": "response", "content": "OK"})
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -44,8 +44,7 @@
     border-radius: 0.5rem;
     padding: 0.5rem 0.5rem;
     display: flex;
-    flex-direction: row;
-    gap: 1rem;
+    flex-direction: column;
     min-height: 4rem;
 }
 
@@ -53,11 +52,17 @@
     flex-basis: 95%;
 }
 
+.task-main {
+    display: flex;
+    flex-direction: row;
+}
+
 .task-tag {
     display: flex;
     flex-direction: row;
     gap: 0.25rem 0.75rem;
     flex-wrap: wrap;
+    padding-bottom: 0.5rem;
 }
 
 .tag {
@@ -72,9 +77,42 @@
     width: 80%;
 }
 
+.task-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
 .task-drag-handle {
     display: flex;
     align-items: center;
+    justify-content: center;
+}
+
+.task-drag-handle p {
+    display: inline-block;
+    transform: rotate(90deg);
+    margin: 0;
+    padding: 0;
+}
+
+.task-options {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.task-options:hover {
+    transition: background-color 0.1s;
+    background-color: lightgray;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.task-options-options {
+    padding: 0 0.5rem
 }
 
 .task-adder {
