@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Dropdown, Space } from 'antd';
 import TaskOptions from "../TaskOptions/TaskOptions";
 
-export default function Task({ id, tags, description, refreshProject, project_name }) {
+export default function Task({ id, tags, description, refreshProject, project_id }) {
     const [editingDescription, setEditingDescription] = useState(false);
     const [currentDescription, setCurrentDescription] = useState(description);
     const [optionsShown, setOptionsShown] = useState(false);
@@ -29,7 +29,7 @@ export default function Task({ id, tags, description, refreshProject, project_na
         fetch("http://127.0.0.1:5000/api/change_task", {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({type: "message", content: {id: id, description: currentDescription, project_name: project_name}})
+            body: JSON.stringify({type: "message", content: {id: id, description: currentDescription, project_id: project_id}})
         })
         .then(res => res.json())
         .then(data => {
@@ -42,7 +42,7 @@ export default function Task({ id, tags, description, refreshProject, project_na
         fetch("http://127.0.0.1:5000/api/remove_task", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({type: "message", content: {id: id, project_name: project_name}})
+            body: JSON.stringify({type: "message", content: {id: id, project_id: project_id}})
         })
             .then(res => res.json())
             .then(data => {

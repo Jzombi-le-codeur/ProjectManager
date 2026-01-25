@@ -18,3 +18,16 @@ th {
 td {
     border: 1px solid lightgray;
 }
+
+tfoot {
+    background-color: lightgray;
+}
+
+tfoot:hover {
+    cursor: pointer;
+    background-color: darkgray;
+}
+
+#project-adder {
+    text-align: center;
+}

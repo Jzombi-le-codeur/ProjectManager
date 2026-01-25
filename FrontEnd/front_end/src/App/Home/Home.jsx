@@ -7,18 +7,34 @@ export default function Home() {
     const [projects, setProjects] = useState([]);
     const navigate = useNavigate();
 
-    useEffect(() => {
+    const refreshHome = () => {
         fetch(`http://127.0.0.1:5000/api/get_projects`)
             .then(res => res.json())
             .then(data => {
-                console.log(data.content);
                 setProjects(data.content)
             })
             .catch(error => console.log(error));
+    }
+
+    useEffect(() => {
+        refreshHome();
     }, [])
 
     const handleProjectRedirection = (id) => {
         navigate(`/project/${id}`);
+    }
+
+    const addProject = () => {
+        fetch(`http://127.0.0.1:5000/api/add_project`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({"type": "message", "content": ""}),
+        })
+        .then(res => res.json())
+        .then(data => {
+            refreshHome();
+        })
+        .catch(error => console.log(error));
     }
 
     return (
@@ -51,6 +67,11 @@ export default function Home() {
                             })
                         }
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colSpan="5" id="project-adder" onClick={() => addProject()}><span>+</span></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

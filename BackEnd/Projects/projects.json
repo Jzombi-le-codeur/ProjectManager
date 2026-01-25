@@ -1,14 +1,8 @@
 [
     {
-        "id": "project_test",
-        "name": "Project Test",
-        "description": "Un simple projet de test",
-        "status": "In Progress"
-    },
-    {
-        "id": "project_test2",
-        "name": "Project Test 2",
-        "description": "Un simple projet de test",
+        "id": "1",
+        "name": "Project's Name",
+        "description": "Project's Description",
         "status": "To Do"
     }
 ]

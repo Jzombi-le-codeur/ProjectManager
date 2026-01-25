@@ -33,13 +33,6 @@ export default function TaskOptions({ setEditingDescription, removeTask }) {
     ]
 
     return (
-        // <div className="task-actions">
-        //     <div className="task-options" onClickCapture={handleMenu}>
-        //         <Dropdown className="task-options-button" menu={{ items }} trigger={['click']} open={menuOpened} onOpenChange={(flag) => setMenuOpened(flag)} placement="bottomRight">
-        //             <span>⋮</span>
-        //         </Dropdown>
-        //     </div>
-        // </div>
         <div className="task-actions">
             <div className="task-options" onClick={(e) => e.stopPropagation()}>
                 <Dropdown

@@ -1,0 +1,17 @@
+{
+    "name": "Project's Name",
+    "description": "Project's Description",
+    "status": "To Do",
+    "tasks": {
+        "to_do": [
+            {
+                "id": "1",
+                "tags": [],
+                "description": "T\u00e2che"
+            }
+        ],
+        "in_progress": [],
+        "review": [],
+        "done": []
+    }
+}

@@ -22,12 +22,22 @@ def index():
 @app.route("/api/get_projects", methods=["GET"])
 def get_projects():
     data = projects.get_projects()
-    print(data)
     return jsonify({"type": "data", "content": data})
 
-@app.route("/api/get_project/<project_name>")
-def get_project(project_name):
-    data = projects.get_project(project_name)
+@app.route("/api/add_project", methods=["POST"])
+def add_project():
+    # Vérifier si on veut modifier une info du projet
+    data = request.get_json()
+    if data["type"] == "message":
+        projects.add_project()
+        return jsonify({"type": "message", "content": "OK"})
+
+    else:
+        return jsonify({"type": "error", "content": data["content"]})
+
+@app.route("/api/get_project/<project_id>")
+def get_project(project_id):
+    data = projects.get_project(project_id)
     if isinstance(data, dict):
         return jsonify({"type": "data", "content": data})
 
@@ -41,11 +51,11 @@ def get_project(project_name):
 def change_tasks_order():
     # Vérifier si on veut modifier une info du projet
     data = request.get_json()
-    project_name = data["project_name"]
+    project_id = data["project_id"]
     project_content = data["content"]
 
     # Sauvegarder le projet
-    projects.save_project(project_name=project_name, content=project_content)
+    projects.save_project(project_id=project_id, content=project_content)
 
     return jsonify({"type": "response", "content": "OK"})
 
@@ -54,9 +64,9 @@ def add_task():
     if request.method == "POST":
         data = request.get_json()
         column = data["content"]["column"]
-        project_name = data["content"]["project_name"]
+        project_id = data["content"]["project_id"]
 
-        task = projects.add_task(column=column, project_name=project_name)
+        task = projects.add_task(column=column, project_id=project_id)
 
         return jsonify({"type": "message", "content": "OK"})
 
@@ -68,16 +78,16 @@ def change_task():
     data = request.get_json()
     id = data["content"]["id"]
     description = data["content"]["description"]
-    project_name = data["content"]["project_name"]
-    projects.change_task(id=id, description=description, project_name=project_name)
+    project_id = data["content"]["project_id"]
+    projects.change_task(id=id, description=description, project_id=project_id)
     return jsonify({"type": "response", "content": "OK"})
 
 @app.route("/api/remove_task", methods=["POST"])
 def remove_task():
     data = request.get_json()
     id = data["content"]["id"]
-    project_name = data["content"]["project_name"]
-    projects.remove_task(id=id, project_name=project_name)
+    project_id = data["content"]["project_id"]
+    projects.remove_task(id=id, project_id=project_id)
     return jsonify({"type": "response", "content": "OK"})
 
 

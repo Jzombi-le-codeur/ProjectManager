@@ -16,20 +16,19 @@ function reformat_status_name(status) {
 
 export default function Project() {
     // Projects Infos
-    const [project_title, setProjectTitle] = useState("");
+    const [project_name, setProjectName] = useState("");
     const [tasks, setTasks] = useState({});
 
     // Récupérer le nom du projet
-    const { project_name } = useParams();
+    const { project_id } = useParams();
 
     const refreshProject = () => {
-        fetch(`http://127.0.0.1:5000/api/get_project/${project_name}`)
+        fetch(`http://127.0.0.1:5000/api/get_project/${project_id}`)
             .then((response) => response.json())
             .then((data) => {
                 if (data.type === "error") {
-                    console.log(data.content)
                 } else {
-                    setProjectTitle(data.content.title);
+                    setProjectName(data.content.name);
                     setTasks(data.content.tasks)
                 }
             })
@@ -71,7 +70,7 @@ export default function Project() {
             // Vérifier si les colonnes existent ou si les colonnes d'arrivée et de destination sont les mêmes
             const activeColumn = findColumn(active.id);
             const overColumn = findColumn(over.id);
-            if (!activeColumn || !overColumn || activeColumn == overColumn) return;
+            if (!activeColumn || !overColumn || activeColumn === overColumn) return;
 
             // Déplacer la tâche
             setTasks((prev) => {
@@ -138,19 +137,18 @@ export default function Project() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    "project_name": project_name,
-                    "content": {"title": project_title, "tasks": tasks}
+                    "project_id": project_id,
+                    "content": {"title": project_name, "tasks": tasks}
                 }),
             })
                 .then((response) => response.json())
-                    .then((data) => {console.log(data.content)})
                 .catch((error) => console.log(error));
         };
 
         return (
             <div className="project-page">
                 <div className="project-meta">
-                    <h2 className="project-name">{project_title}</h2>
+                    <h2 className="project-name">{project_name}</h2>
                 </div>
 
                 <div className="project-content">
@@ -164,7 +162,7 @@ export default function Project() {
                                         taskblock_id={column}
                                         status={status}
                                         tasks={tasks[column]}
-                                        project_name={project_name}
+                                        project_id={project_id}
                                         refreshProject={refreshProject}
                                     />
                                 })
