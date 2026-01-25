@@ -1,11 +1,23 @@
 {
     "title": "Project Test",
+    "description": "Un simple projet de test",
+    "status": "In Progress",
     "tasks": {
         "to_do": [
             {
+                "id": "15",
+                "tags": [],
+                "description": "T\u00e2che"
+            },
+            {
                 "id": "14",
                 "tags": [],
-                "description": "tata"
+                "description": "T\u00e2che"
+            },
+            {
+                "id": "13",
+                "tags": [],
+                "description": "T\u00e2che"
             }
         ],
         "in_progress": [

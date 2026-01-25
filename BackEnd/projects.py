@@ -6,7 +6,13 @@ import pandas as pd
 class Projects:
     def __init__(self):
         self.projects_dir_path = pathlib.Path("Projects\\Projects")
+        self.projects = list()
         self.project = dict()
+
+    def get_projects(self) -> list:
+        with open(pathlib.Path("Projects\\projects.json"), "r", encoding="utf-8") as projects_file:
+            self.projects = json.load(projects_file)
+            return self.projects
 
     def get_project(self, project_name: str) -> dict | str:
         project_file_path = pathlib.PurePath(self.projects_dir_path, f"{project_name}.json")
@@ -60,7 +66,6 @@ class Projects:
         tasks = [task for column in self.project["tasks"].values() for task in column]
         for task in tasks:
             if task["id"] == id:
-                print(task["id"], id)
                 for column in self.project["tasks"].keys():
                     for task_og in self.project["tasks"][column]:
                         if task_og["id"] == id:

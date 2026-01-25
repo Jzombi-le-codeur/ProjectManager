@@ -19,6 +19,12 @@ app.json.sort_keys = False
 def index():
     return "<p>BackEnd de ProjectManager</p>"
 
+@app.route("/api/get_projects", methods=["GET"])
+def get_projects():
+    data = projects.get_projects()
+    print(data)
+    return jsonify({"type": "data", "content": data})
+
 @app.route("/api/get_project/<project_name>")
 def get_project(project_name):
     data = projects.get_project(project_name)

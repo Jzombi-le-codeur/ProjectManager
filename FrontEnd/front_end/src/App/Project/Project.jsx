@@ -143,7 +143,7 @@ export default function Project() {
                 }),
             })
                 .then((response) => response.json())
-                .then((data) => {console.log(data.content)})
+                    .then((data) => {console.log(data.content)})
                 .catch((error) => console.log(error));
         };
 

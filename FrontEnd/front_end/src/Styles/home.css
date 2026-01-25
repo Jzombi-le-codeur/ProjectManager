@@ -1,7 +1,20 @@
 table {
+    width: 100%;
     border-collapse: collapse;
 }
 
-th, td {
-    border: 1px solid black;
+thead {
+    background-color: rgb(89, 243, 241);
+}
+
+tr {
+    height: 5rem;
+}
+
+th {
+    border: 1px solid lightgray;
+}
+
+td {
+    border: 1px solid lightgray;
 }

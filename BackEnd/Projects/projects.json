@@ -1,1 +1,14 @@
-["project_test.json"]
+[
+    {
+        "id": "project_test",
+        "name": "Project Test",
+        "description": "Un simple projet de test",
+        "status": "In Progress"
+    },
+    {
+        "id": "project_test2",
+        "name": "Project Test 2",
+        "description": "Un simple projet de test",
+        "status": "To Do"
+    }
+]

@@ -33,7 +33,6 @@ export default function Task({ id, tags, description, refreshProject, project_na
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             refreshProject();
         })
         .catch(err => console.log(err));
@@ -47,7 +46,6 @@ export default function Task({ id, tags, description, refreshProject, project_na
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 refreshProject();
             })
             .catch(err => console.log(err));
