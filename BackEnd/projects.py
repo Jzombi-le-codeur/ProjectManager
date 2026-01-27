@@ -39,24 +39,37 @@ class Projects:
 
         self.save_projects()
 
-    def save_projects(self) -> None:
+    def remove_project(self, project_id):
+        self.projects = self.get_projects()
+        projects = [project for project in self.projects]
+        for i, project in enumerate(projects):
+            if project["id"] == project_id:
+                del self.projects[i]
+
+        self.save_projects(remove=True, project_id=project_id)
+
+    def save_projects(self, remove: bool = False, project_id: int = 0) -> None:
         with open(pathlib.Path("Projects\\projects.json"), "w", encoding="utf-8") as projects_file:
             json.dump(self.projects, projects_file, indent=4)
 
-        with open(pathlib.PurePath(self.projects_dir_path, f"{self.projects[0]["id"]}.json"), "w", encoding="utf-8") as project_file:
-            project_content = {
-                "name": self.projects[0]["name"],
-                "description": self.projects[0]["description"],
-                "status": self.projects[0]["status"],
-                "tasks": {
-                    "to_do": [],
-                    "in_progress": [],
-                    "review": [],
-                    "done": []
-                }
-            }
+        if remove:
+            os.remove(pathlib.PurePath(self.projects_dir_path, f"{project_id}.json"))
 
-            json.dump(project_content, project_file, indent=4)
+        else:
+            with open(pathlib.PurePath(self.projects_dir_path, f"{self.projects[0]["id"]}.json"), "w", encoding="utf-8") as project_file:
+                project_content = {
+                    "name": self.projects[0]["name"],
+                    "description": self.projects[0]["description"],
+                    "status": self.projects[0]["status"],
+                    "tasks": {
+                        "to_do": [],
+                        "in_progress": [],
+                        "review": [],
+                        "done": []
+                    }
+                }
+
+                json.dump(project_content, project_file, indent=4)
 
     def get_project(self, project_id: str) -> dict | str:
         project_exists = False

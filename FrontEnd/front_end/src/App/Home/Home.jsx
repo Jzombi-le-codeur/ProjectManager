@@ -1,6 +1,8 @@
 import "../../Styles/home.css";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import ProjectOptions from "../../Components/Project/ProjectOptions/ProjectOptions";
+import Project from "../Project/Project";
 
 
 export default function Home() {
@@ -37,6 +39,19 @@ export default function Home() {
         .catch(error => console.log(error));
     }
 
+    const removeProject = (project_id) => {
+        fetch("http://127.0.0.1:5000/api/remove_project", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({type: "message", content: {project_id: project_id}})
+        })
+            .then(res => res.json())
+            .then(data => {
+                refreshHome();
+            })
+            .catch(err => console.log(err));
+    }
+
     return (
         <div className={"home-page"}>
             <div className="home-page-meta">
@@ -61,7 +76,12 @@ export default function Home() {
                                         <td>{project.name}</td>
                                         <td>{project.description}</td>
                                         <td>{project.status}</td>
-                                        <td><button onClick={() => handleProjectRedirection(project.id)}>Accéder au projet</button></td>
+                                        <td>
+                                            <div className="project-interactions">
+                                                <button onClick={() => handleProjectRedirection(project.id)}>Accéder au projet</button>
+                                                <ProjectOptions removeProject={removeProject} project_id={project.id} />
+                                            </div>
+                                        </td>
                                     </tr>
                                 )
                             })

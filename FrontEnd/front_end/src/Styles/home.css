@@ -31,3 +31,26 @@ tfoot:hover {
 #project-adder {
     text-align: center;
 }
+
+.project-interactions {
+    display: flex;
+}
+
+.project-options {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.project-options:hover {
+    transition: background-color 0.1s;
+    background-color: lightgray;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.project-options-options {
+    padding: 0 0.5rem
+}

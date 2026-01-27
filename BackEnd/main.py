@@ -35,6 +35,13 @@ def add_project():
     else:
         return jsonify({"type": "error", "content": data["content"]})
 
+@app.route("/api/remove_project", methods=["POST"])
+def remove_project():
+    data = request.get_json()
+    project_id = data["content"]["project_id"]
+    projects.remove_project(project_id=project_id)
+    return jsonify({"type": "response", "content": "OK"})
+
 @app.route("/api/get_project/<project_id>")
 def get_project(project_id):
     data = projects.get_project(project_id)
