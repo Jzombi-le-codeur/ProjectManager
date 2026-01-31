@@ -39,6 +39,19 @@ class Projects:
 
         self.save_projects()
 
+    def change_project(self, project_id, attribute: str, value: str):
+        self.projects = self.get_projects()
+        self.project = self.get_project(project_id=project_id)
+        projects = [project for project in self.projects]
+        for i, project in enumerate(projects):
+            if project["id"] == project_id:
+                self.projects[i][attribute] = value
+                self.project[attribute] = value
+
+                self.save_projects(project_id=project_id)
+                self.save_project(project_id=project, content=self.project)
+
+
     def remove_project(self, project_id):
         self.projects = self.get_projects()
         projects = [project for project in self.projects]

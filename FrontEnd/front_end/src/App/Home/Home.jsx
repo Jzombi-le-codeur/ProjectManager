@@ -9,6 +9,15 @@ export default function Home() {
     const [projects, setProjects] = useState([]);
     const navigate = useNavigate();
 
+    console.log(projects);
+
+    const [editingProject, setEditingProject] = useState("0");
+    const [editingProjectName, setEditingProjectName] = useState(false);
+    const [currentProjectName, setCurrentProjectName] = useState("");
+    const [editingProjectDescription, setEditingProjectDescription] = useState(false);
+    const [currentProjectDescription, setCurrentProjectDescription] = useState("");
+    const [editingProjectStatus, setEditingProjectStatus] = useState(false);
+
     const refreshHome = () => {
         fetch(`http://127.0.0.1:5000/api/get_projects`)
             .then(res => res.json())
@@ -52,6 +61,52 @@ export default function Home() {
             .catch(err => console.log(err));
     }
 
+    const changeProjectName = () => {
+        setEditingProjectName(false);
+        fetch("http://127.0.0.1:5000/api/change_project", {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({type: "message", content: {id: editingProject, attribute: "name", value: currentProjectName}})
+        })
+            .then(res => {
+                setEditingProject("0");
+                res.json()
+            })
+            .then(data => {
+                refreshHome();
+            })
+            .catch(err => console.log(err));
+    }
+
+    const changeProjectDescription = () => {
+        setEditingProjectDescription(false);
+        fetch("http://127.0.0.1:5000/api/change_project", {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({type: "message", content: {id: editingProject, attribute: "description", value: currentProjectDescription}})
+        })
+            .then(res => {
+                setEditingProject("0");
+                res.json()
+            })
+            .then(data => {
+                refreshHome();
+            })
+            .catch(err => console.log(err));
+    }
+
+    const handleProjectNameKeyDown = (event) => {
+        if (event.key === "Enter") {
+            changeProjectName();
+        }
+    }
+
+    const handleProjectDescriptionKeyDown = (event) => {
+        if (event.key === "Enter") {
+            changeProjectDescription();
+        }
+    }
+
     return (
         <div className={"home-page"}>
             <div className="home-page-meta">
@@ -73,8 +128,55 @@ export default function Home() {
                             projects.map(project => {
                                 return (
                                     <tr key={`project-${project.id}`} className="projects-table-content">
-                                        <td>{project.name}</td>
-                                        <td>{project.description}</td>
+                                        <td>
+                                            {
+                                                editingProjectName && editingProject === project.id ? (
+                                                    <input
+                                                        type={"text"}
+                                                        value={currentProjectName}
+                                                        onChange={(e) => setCurrentProjectName(e.target.value)}
+                                                        onKeyDown={handleProjectNameKeyDown}
+                                                        onBlur={() => changeProjectName()}
+                                                        autoFocus={true}
+                                                        onFocus={(event) => event.target.select()}
+                                                    />
+                                                ) : (
+                                                    <p onDoubleClick={(event) => {
+                                                        event.stopPropagation();
+                                                        setEditingProject(project.id);
+                                                        setEditingProjectName(true)
+                                                        setCurrentProjectName(project.name);
+                                                    }}>
+                                                        {project.name}
+                                                    </p>
+                                                )
+                                            }
+                                        </td>
+                                        <td>
+                                            {
+                                                editingProjectDescription && editingProject === project.id ? (
+                                                    <input
+                                                        type={"text"}
+                                                        value={currentProjectDescription}
+                                                        onChange={(e) => setCurrentProjectDescription(e.target.value)}
+                                                        onKeyDown={handleProjectDescriptionKeyDown}
+                                                        onBlur={() => changeProjectDescription()}
+                                                        autoFocus={true}
+                                                        onFocus={(event) => event.target.select()}
+                                                    />
+                                                ) : (
+                                                    <p onDoubleClick={(event) => {
+                                                        event.stopPropagation();
+                                                        console.log(`Project : ${project}`)
+                                                        setEditingProject(project.id);
+                                                        setEditingProjectDescription(true)
+                                                        setCurrentProjectDescription(project.description);
+                                                    }}>
+                                                        {project.description}
+                                                    </p>
+                                                )
+                                            }
+                                        </td>
                                         <td>{project.status}</td>
                                         <td>
                                             <div className="project-interactions">

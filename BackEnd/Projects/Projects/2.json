@@ -1,0 +1,11 @@
+{
+    "name": "Project's Name",
+    "description": "Project's test",
+    "status": "To Do",
+    "tasks": {
+        "to_do": [],
+        "in_progress": [],
+        "review": [],
+        "done": []
+    }
+}
