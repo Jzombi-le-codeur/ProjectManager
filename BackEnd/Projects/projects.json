@@ -1,9 +1,9 @@
 [
     {
         "id": "3",
-        "name": "Project's Name",
-        "description": "Project's Descrn",
-        "status": "Done"
+        "name": "Project's",
+        "description": "Project's Description",
+        "status": "To Do"
     },
     {
         "id": "2",

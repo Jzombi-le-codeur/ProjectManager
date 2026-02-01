@@ -10,6 +10,9 @@ export default function Home() {
     const navigate = useNavigate();
 
     const [editingProject, setEditingProject] = useState("0");
+    const [editingProjectAttribute, setEditingProjectAttribute] = useState("");
+    const [currentProjectAttributeValue, setCurrentProjectAttributeValue] = useState("");
+
     const [editingProjectName, setEditingProjectName] = useState(false);
     const [currentProjectName, setCurrentProjectName] = useState("");
     const [editingProjectDescription, setEditingProjectDescription] = useState(false);
@@ -60,12 +63,12 @@ export default function Home() {
             .catch(err => console.log(err));
     }
 
-    const changeProjectName = () => {
-        setEditingProjectName(false);
+    const changeProjectAttribute = () => {
+        setEditingProjectAttribute("");
         fetch("http://127.0.0.1:5000/api/change_project", {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({type: "message", content: {id: editingProject, attribute: "name", value: currentProjectName}})
+            body: JSON.stringify({type: "message", content: {id: editingProject, attribute: editingProjectAttribute, value: currentProjectAttributeValue}})
         })
             .then(res => {
                 setEditingProject("0");
@@ -77,49 +80,9 @@ export default function Home() {
             .catch(err => console.log(err));
     }
 
-    const changeProjectDescription = () => {
-        setEditingProjectDescription(false);
-        fetch("http://127.0.0.1:5000/api/change_project", {
-            method: "PUT",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({type: "message", content: {id: editingProject, attribute: "description", value: currentProjectDescription}})
-        })
-            .then(res => {
-                setEditingProject("0");
-                res.json()
-            })
-            .then(data => {
-                refreshHome();
-            })
-            .catch(err => console.log(err));
-    }
-
-    const changeProjectStatus = () => {
-        setEditingProjectStatus(false);
-        fetch("http://127.0.0.1:5000/api/change_project", {
-            method: "PUT",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({type: "message", content: {id: editingProject, attribute: "status", value: currentProjectStatus}})
-        })
-            .then(res => {
-                setEditingProject("0");
-                res.json()
-            })
-            .then(data => {
-                refreshHome();
-            })
-            .catch(err => console.log(err));
-    }
-
-    const handleProjectNameKeyDown = (event) => {
+    const handleKeyDown = (event) => {
         if (event.key === "Enter") {
-            changeProjectName();
-        }
-    }
-
-    const handleProjectDescriptionKeyDown = (event) => {
-        if (event.key === "Enter") {
-            changeProjectDescription();
+            changeProjectAttribute();
         }
     }
 
@@ -146,13 +109,13 @@ export default function Home() {
                                     <tr key={`project-${project.id}`} className="projects-table-content">
                                         <td>
                                             {
-                                                editingProjectName && editingProject === project.id ? (
+                                                editingProjectAttribute === "name" && editingProject === project.id ? (
                                                     <input
                                                         type={"text"}
-                                                        value={currentProjectName}
-                                                        onChange={(e) => setCurrentProjectName(e.target.value)}
-                                                        onKeyDown={handleProjectNameKeyDown}
-                                                        onBlur={() => changeProjectName()}
+                                                        value={currentProjectAttributeValue}
+                                                        onChange={(e) => setCurrentProjectAttributeValue(e.target.value)}
+                                                        onKeyDown={handleKeyDown}
+                                                        onBlur={() => changeProjectAttribute()}
                                                         autoFocus={true}
                                                         onFocus={(event) => event.target.select()}
                                                     />
@@ -160,8 +123,8 @@ export default function Home() {
                                                     <p onDoubleClick={(event) => {
                                                         event.stopPropagation();
                                                         setEditingProject(project.id);
-                                                        setEditingProjectName(true)
-                                                        setCurrentProjectName(project.name);
+                                                        setEditingProjectAttribute("name")
+                                                        setCurrentProjectAttributeValue(project.name);
                                                     }}>
                                                         {project.name}
                                                     </p>
@@ -170,13 +133,13 @@ export default function Home() {
                                         </td>
                                         <td>
                                             {
-                                                editingProjectDescription && editingProject === project.id ? (
+                                                editingProjectAttribute === "description" && editingProject === project.id ? (
                                                     <input
                                                         type={"text"}
-                                                        value={currentProjectDescription}
-                                                        onChange={(e) => setCurrentProjectDescription(e.target.value)}
-                                                        onKeyDown={handleProjectDescriptionKeyDown}
-                                                        onBlur={() => changeProjectDescription()}
+                                                        value={currentProjectAttributeValue}
+                                                        onChange={(e) => setCurrentProjectAttributeValue(e.target.value)}
+                                                        onKeyDown={handleKeyDown}
+                                                        onBlur={() => changeProjectAttribute()}
                                                         autoFocus={true}
                                                         onFocus={(event) => event.target.select()}
                                                     />
@@ -184,8 +147,8 @@ export default function Home() {
                                                     <p onDoubleClick={(event) => {
                                                         event.stopPropagation();
                                                         setEditingProject(project.id);
-                                                        setEditingProjectDescription(true)
-                                                        setCurrentProjectDescription(project.description);
+                                                        setEditingProjectAttribute("description")
+                                                        setCurrentProjectAttributeValue(project.description);
                                                     }}>
                                                         {project.description}
                                                     </p>
@@ -193,14 +156,14 @@ export default function Home() {
                                             }
                                         </td>
                                         <td>{
-                                            editingProjectStatus && editingProject === project.id ? (
+                                            editingProjectAttribute === "status" && editingProject === project.id ? (
                                                 <select
-                                                    value={currentProjectStatus}
+                                                    value={currentProjectAttributeValue}
                                                     onChange={(event) => {
-                                                        setCurrentProjectStatus(event.target.value);
+                                                        setCurrentProjectAttributeValue(event.target.value);
                                                         // changeProjectStatus();
                                                     }}
-                                                    onBlur={() => changeProjectStatus()}
+                                                    onBlur={() => changeProjectAttribute()}
                                                 >
                                                     <option value="To Do">To Do</option>
                                                     <option value="In Progress">In Progress</option>
@@ -211,8 +174,8 @@ export default function Home() {
                                                 <p onDoubleClick={(event) => {
                                                     event.stopPropagation();
                                                     setEditingProject(project.id);
-                                                    setEditingProjectStatus(true)
-                                                    setCurrentProjectStatus(project.status);
+                                                    setEditingProjectAttribute("status")
+                                                    setCurrentProjectAttributeValue(project.status);
                                                 }}>
                                                     {project.status}
                                                 </p>
