@@ -2,8 +2,6 @@ import "../../Styles/home.css";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import ProjectOptions from "../../Components/Project/ProjectOptions/ProjectOptions";
-import Project from "../Project/Project";
-
 
 export default function Home() {
     const [projects, setProjects] = useState([]);
