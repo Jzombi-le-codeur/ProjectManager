@@ -1,8 +1,7 @@
-import { Dropdown, Space } from 'antd';
 import {useState} from "react";
+import {Dropdown} from "antd";
 
-
-export default function TaskOptions({ setEditingDescription, removeTask }) {
+export default function ProjectOptions({ removeProject, project_id }) {
     const [menuOpened, setMenuOpened] = useState(false);
     const items = [
         {
@@ -14,7 +13,6 @@ export default function TaskOptions({ setEditingDescription, removeTask }) {
             onClick: ({ domEvent }) => {
                 domEvent.preventDefault();
                 domEvent.stopPropagation();
-                setEditingDescription(true);
             }
         },
         {
@@ -26,17 +24,16 @@ export default function TaskOptions({ setEditingDescription, removeTask }) {
             onClick: ({ domEvent }) => {
                 domEvent.preventDefault();
                 domEvent.stopPropagation();
-                removeTask();
+                removeProject(project_id);
             }
-
         }
     ]
 
     return (
-        <div className="task-actions">
-            <div className="task-options" onClick={(e) => e.stopPropagation()}>
+        <div className="project-actions">
+            <div className="project-options" onClick={(e) => e.stopPropagation()}>
                 <Dropdown
-                    className="task-options-button"
+                    className="project-options-button"
                     menu={{ items }}
                     trigger={['click']}
                     open={menuOpened}
