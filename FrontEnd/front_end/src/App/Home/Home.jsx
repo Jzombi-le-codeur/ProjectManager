@@ -9,14 +9,13 @@ export default function Home() {
     const [projects, setProjects] = useState([]);
     const navigate = useNavigate();
 
-    console.log(projects);
-
     const [editingProject, setEditingProject] = useState("0");
     const [editingProjectName, setEditingProjectName] = useState(false);
     const [currentProjectName, setCurrentProjectName] = useState("");
     const [editingProjectDescription, setEditingProjectDescription] = useState(false);
     const [currentProjectDescription, setCurrentProjectDescription] = useState("");
     const [editingProjectStatus, setEditingProjectStatus] = useState(false);
+    const [currentProjectStatus, setCurrentProjectStatus] = useState("");
 
     const refreshHome = () => {
         fetch(`http://127.0.0.1:5000/api/get_projects`)
@@ -84,6 +83,23 @@ export default function Home() {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({type: "message", content: {id: editingProject, attribute: "description", value: currentProjectDescription}})
+        })
+            .then(res => {
+                setEditingProject("0");
+                res.json()
+            })
+            .then(data => {
+                refreshHome();
+            })
+            .catch(err => console.log(err));
+    }
+
+    const changeProjectStatus = () => {
+        setEditingProjectStatus(false);
+        fetch("http://127.0.0.1:5000/api/change_project", {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({type: "message", content: {id: editingProject, attribute: "status", value: currentProjectStatus}})
         })
             .then(res => {
                 setEditingProject("0");
@@ -167,7 +183,6 @@ export default function Home() {
                                                 ) : (
                                                     <p onDoubleClick={(event) => {
                                                         event.stopPropagation();
-                                                        console.log(`Project : ${project}`)
                                                         setEditingProject(project.id);
                                                         setEditingProjectDescription(true)
                                                         setCurrentProjectDescription(project.description);
@@ -177,7 +192,32 @@ export default function Home() {
                                                 )
                                             }
                                         </td>
-                                        <td>{project.status}</td>
+                                        <td>{
+                                            editingProjectStatus && editingProject === project.id ? (
+                                                <select
+                                                    value={currentProjectStatus}
+                                                    onChange={(event) => {
+                                                        setCurrentProjectStatus(event.target.value);
+                                                        // changeProjectStatus();
+                                                    }}
+                                                    onBlur={() => changeProjectStatus()}
+                                                >
+                                                    <option value="To Do">To Do</option>
+                                                    <option value="In Progress">In Progress</option>
+                                                    <option value="Review">Review</option>
+                                                    <option value="Done">Done</option>
+                                                </select>
+                                            ) : (
+                                                <p onDoubleClick={(event) => {
+                                                    event.stopPropagation();
+                                                    setEditingProject(project.id);
+                                                    setEditingProjectStatus(true)
+                                                    setCurrentProjectStatus(project.status);
+                                                }}>
+                                                    {project.status}
+                                                </p>
+                                            )
+                                        }</td>
                                         <td>
                                             <div className="project-interactions">
                                                 <button onClick={() => handleProjectRedirection(project.id)}>Accéder au projet</button>

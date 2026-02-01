@@ -1,11 +1,15 @@
 {
-    "name": "Project's Name",
-    "description": "Project's test",
-    "status": "To Do",
+    "title": "Project's Name",
     "tasks": {
         "to_do": [],
         "in_progress": [],
-        "review": [],
+        "review": [
+            {
+                "id": "1",
+                "tags": [],
+                "description": "T\u00e2che"
+            }
+        ],
         "done": []
     }
 }
