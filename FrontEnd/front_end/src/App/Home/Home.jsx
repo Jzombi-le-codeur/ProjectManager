@@ -13,13 +13,6 @@ export default function Home() {
     const [editingProjectAttribute, setEditingProjectAttribute] = useState("");
     const [currentProjectAttributeValue, setCurrentProjectAttributeValue] = useState("");
 
-    const [editingProjectName, setEditingProjectName] = useState(false);
-    const [currentProjectName, setCurrentProjectName] = useState("");
-    const [editingProjectDescription, setEditingProjectDescription] = useState(false);
-    const [currentProjectDescription, setCurrentProjectDescription] = useState("");
-    const [editingProjectStatus, setEditingProjectStatus] = useState(false);
-    const [currentProjectStatus, setCurrentProjectStatus] = useState("");
-
     const refreshHome = () => {
         fetch(`http://127.0.0.1:5000/api/get_projects`)
             .then(res => res.json())
