@@ -175,7 +175,12 @@ export default function Home() {
                                         <td>
                                             <div className="project-interactions">
                                                 <button onClick={() => handleProjectRedirection(project.id)}>Accéder au projet</button>
-                                                <ProjectOptions removeProject={removeProject} project_id={project.id} />
+                                                <ProjectOptions
+                                                    project={project}
+                                                    setEditingProject={setEditingProject}
+                                                    setEditingProjectAttribute={setEditingProjectAttribute}
+                                                    setCurrentProjectAttributeValue={setCurrentProjectAttributeValue}
+                                                    removeProject={removeProject} />
                                             </div>
                                         </td>
                                     </tr>

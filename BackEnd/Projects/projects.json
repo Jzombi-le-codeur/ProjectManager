@@ -1,1 +1,8 @@
-[]
+[
+    {
+        "id": "2",
+        "name": "Project's Name",
+        "description": "Project's Description",
+        "status": "To Do"
+    }
+]

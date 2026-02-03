@@ -11,6 +11,15 @@ tr {
     height: 5rem;
 }
 
+tr:hover {
+    transition: background-color 0.1s;
+    background-color: lightgrey;
+}
+
+.projects-table-titles:hover {
+    background-color: deepskyblue;
+}
+
 th {
     border: 1px solid lightgray;
 }

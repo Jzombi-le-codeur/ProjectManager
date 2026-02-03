@@ -1,22 +1,54 @@
+import { Dropdown, Space } from 'antd';
 import {useState} from "react";
-import {Dropdown} from "antd";
 
-export default function ProjectOptions({ removeProject, project_id }) {
+
+export default function ProjectOptions({ project, setEditingProject, setEditingProjectAttribute, setCurrentProjectAttributeValue, removeProject }) {
     const [menuOpened, setMenuOpened] = useState(false);
     const items = [
         {
             key: "1",
             label: (
-                <p>Editer</p>
+                <p>Renommer</p>
             ),
             style: {color: "#3388ff", padding: "0 0.5rem"},
             onClick: ({ domEvent }) => {
                 domEvent.preventDefault();
                 domEvent.stopPropagation();
+                setEditingProject(project.id);
+                setEditingProjectAttribute("name")
+                setCurrentProjectAttributeValue(project.name);
             }
         },
         {
             key: "2",
+            label: (
+                <p>Changer la Description</p>
+            ),
+            style: {color: "#3388ff", padding: "0 0.5rem"},
+            onClick: ({ domEvent }) => {
+                domEvent.preventDefault();
+                domEvent.stopPropagation();
+                setEditingProject(project.id);
+                setEditingProjectAttribute("description")
+                setCurrentProjectAttributeValue(project.description);
+            }
+        },
+        {
+            key: "3",
+            label: (
+                <p>Changer le Statut</p>
+            ),
+            style: {color: "#3388ff", padding: "0 0.5rem"},
+            onClick: ({ domEvent }) => {
+                domEvent.preventDefault();
+                domEvent.stopPropagation();
+                setEditingProject(project.id);
+                setEditingProjectAttribute("status")
+                setCurrentProjectAttributeValue(project.statut);
+            }
+        },
+        {
+            key: "4",
             label: (
                 <p>Supprimer</p>
             ),
@@ -24,16 +56,17 @@ export default function ProjectOptions({ removeProject, project_id }) {
             onClick: ({ domEvent }) => {
                 domEvent.preventDefault();
                 domEvent.stopPropagation();
-                removeProject(project_id);
+                removeProject(project.id);
             }
+
         }
     ]
 
     return (
-        <div className="project-actions">
-            <div className="project-options" onClick={(e) => e.stopPropagation()}>
+        <div className="task-actions">
+            <div className="task-options" onClick={(e) => e.stopPropagation()}>
                 <Dropdown
-                    className="project-options-button"
+                    className="task-options-button"
                     menu={{ items }}
                     trigger={['click']}
                     open={menuOpened}
