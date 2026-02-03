@@ -1,6 +1,33 @@
+.home-page-meta {
+    background-color: #059cd1;
+    color: white;
+    text-align: center;
+    margin: 2rem 4rem;
+    padding: 3rem;
+    border-radius: 15px;
+}
+
+.home-title {
+    margin-bottom: 1rem
+}
+.home-description {
+    font-style: italic;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
+}
+
+.projects-table-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.projects-table-filters {
+    display: flex;
+    justify-content: space-between;
 }
 
 thead {
@@ -8,12 +35,15 @@ thead {
 }
 
 tr {
+    transition:
+        background-color 0.1s,
+        transform 0.1s;
     height: 5rem;
 }
 
 tr:hover {
-    transition: background-color 0.1s;
-    background-color: lightgrey;
+    background-color: whitesmoke;
+    transform: scale(1.05);
 }
 
 .projects-table-titles:hover {
@@ -28,6 +58,20 @@ td {
     border: 1px solid lightgray;
 }
 
+.project-access-button {
+    background-color: deepskyblue;
+    transition: background-color 0.1s;
+    color: white;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 15px;
+}
+
+.project-access-button:hover {
+    cursor: pointer;
+    background-color: dodgerblue;
+}
+
 tfoot {
     background-color: lightgray;
 }
@@ -38,6 +82,13 @@ tfoot:hover {
 }
 
 #project-adder {
+    transition: background-color 0.1s;
+    text-align: center;
+}
+
+#project-adder:hover {
+    transition: background-color 0.1s;
+    background-color: gray;
     text-align: center;
 }
 

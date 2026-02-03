@@ -44,7 +44,7 @@ export default function ProjectOptions({ project, setEditingProject, setEditingP
                 domEvent.stopPropagation();
                 setEditingProject(project.id);
                 setEditingProjectAttribute("status")
-                setCurrentProjectAttributeValue(project.statut);
+                setCurrentProjectAttributeValue(project.status);
             }
         },
         {

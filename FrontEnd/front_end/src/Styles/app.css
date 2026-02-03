@@ -1,4 +1,13 @@
-body {
+@font-face {
     font-family: "Inter";
     src: url("../Fonts/Inter/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+    font-weight: 100 900; /* important pour une variable font */
+    font-style: normal;
+}
+
+body {
+    padding: 1rem 5rem;
+    font-family: "Inter", sans-serif;
+    background: linear-gradient(white 80%, lightgray);
+    height: 100vh;
 }
