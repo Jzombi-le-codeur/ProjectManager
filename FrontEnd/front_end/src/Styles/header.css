@@ -12,16 +12,13 @@ body {
     height: 5rem;
 }
 
-.header-menu {
-    list-style-type: none;
-}
-
 .header-home-button a  {
+    display: inline-block;
+    transition: transform 0.1s, font-weight 0.1s;
     text-decoration: none;
     color: inherit;
 }
-
-.header-menu {
-    display: flex;
-    flex-direction: column-reverse;
+.header-home-button a:hover {
+    transform: scale(1.1);
+    font-weight: bold;
 }

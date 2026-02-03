@@ -1,15 +1,15 @@
 {
     "name": "Project's Name",
     "tasks": {
-        "to_do": [],
-        "in_progress": [],
-        "review": [
+        "to_do": [
             {
                 "id": "1",
                 "tags": [],
                 "description": "T\u00e2che"
             }
         ],
+        "in_progress": [],
+        "review": [],
         "done": []
     }
 }
