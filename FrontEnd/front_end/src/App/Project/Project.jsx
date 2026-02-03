@@ -44,7 +44,7 @@ export default function Project() {
     }, [])
 
     const statusClassName = () => (
-        projectStatus.replace(" ", "_").toLowerCase()
+        projectStatus ? projectStatus.replace(" ", "_").toLowerCase() : ""
     )
 
     // Si les données ont été chargées
@@ -138,7 +138,6 @@ export default function Project() {
                 }
             }
 
-            // Sauvegarder les modifications
             fetch("http://127.0.0.1:5000/api/change_tasks_order", {
                 method: "PUT",
                 headers: {
@@ -146,10 +145,17 @@ export default function Project() {
                 },
                 body: JSON.stringify({
                     "project_id": project_id,
-                    "content": {"name": project_name, "tasks": tasks}
+                    "content": {
+                        "name": project_name,
+                        "tasks": tasks,
+                        "status": projectStatus,      // Ajoute ceci
+                        "description": projectDescription // Ajoute ceci
+                    }
                 }),
             })
                 .then((response) => response.json())
+                // Optionnel : refresh après le déplacement pour être sûr d'avoir les IDs propres
+                .then(() => refreshProject())
                 .catch((error) => console.log(error));
         };
 
