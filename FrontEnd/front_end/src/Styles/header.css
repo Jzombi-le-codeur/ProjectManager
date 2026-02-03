@@ -1,0 +1,27 @@
+body {
+    text-decoration: none;
+}
+
+.header {
+    padding: 0 2rem;
+    background-color: #00bfff;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5rem;
+}
+
+.header-menu {
+    list-style-type: none;
+}
+
+.header-home-button a  {
+    text-decoration: none;
+    color: inherit;
+}
+
+.header-menu {
+    display: flex;
+    flex-direction: column-reverse;
+}

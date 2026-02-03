@@ -138,7 +138,7 @@ export default function Project() {
                 },
                 body: JSON.stringify({
                     "project_id": project_id,
-                    "content": {"title": project_name, "tasks": tasks}
+                    "content": {"name": project_name, "tasks": tasks}
                 }),
             })
                 .then((response) => response.json())
@@ -146,31 +146,33 @@ export default function Project() {
         };
 
         return (
-            <div className="project-page">
-                <div className="project-meta">
-                    <h2 className="project-name">{project_name}</h2>
-                </div>
+            <main>
+                <div className="project-page">
+                    <div className="project-meta">
+                        <h2 className="project-name">{project_name}</h2>
+                    </div>
 
-                <div className="project-content">
-                    <div className="project-tasks">
-                        <DndContext collisionDetection={closestCorners} onDragOver={handleDragOver} onDragEnd={handleDragEnd}>
-                            {
-                                columns.map(column => {
-                                    const status = reformat_status_name(column);
-                                    return <Taskblock
-                                        key={`column-${column}`}
-                                        taskblock_id={column}
-                                        status={status}
-                                        tasks={tasks[column]}
-                                        project_id={project_id}
-                                        refreshProject={refreshProject}
-                                    />
-                                })
-                            }
-                        </DndContext>
+                    <div className="project-content">
+                        <div className="project-tasks">
+                            <DndContext collisionDetection={closestCorners} onDragOver={handleDragOver} onDragEnd={handleDragEnd}>
+                                {
+                                    columns.map(column => {
+                                        const status = reformat_status_name(column);
+                                        return <Taskblock
+                                            key={`column-${column}`}
+                                            taskblock_id={column}
+                                            status={status}
+                                            tasks={tasks[column]}
+                                            project_id={project_id}
+                                            refreshProject={refreshProject}
+                                        />
+                                    })
+                                }
+                            </DndContext>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </main>
         )
     }
 };
