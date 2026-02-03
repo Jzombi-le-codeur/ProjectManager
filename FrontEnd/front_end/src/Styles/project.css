@@ -1,3 +1,31 @@
+.project-meta {
+    color: white;
+    text-align: center;
+    margin: 2rem 4rem;
+    padding: 3rem;
+    border-radius: 15px;
+}
+
+.project-description, .project-status {
+    font-style: italic;
+}
+
+.to_do {
+    background-color: red;
+}
+
+.in_progress {
+    background-color: orange;
+}
+
+.review {
+    background-color: #059cd1;
+}
+
+.done {
+    background-color: #00ff0d;
+}
+
 .project-tasks {
     padding: 0 1rem;
     display: flex;

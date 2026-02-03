@@ -11,13 +11,15 @@ function capitalize(string) {
 }
 
 function reformat_status_name(status) {
-    return capitalize(status).replace("_", " ");;
+    return capitalize(status).replace("_", " ");
 }
 
 export default function Project() {
     // Projects Infos
     const [project_name, setProjectName] = useState("");
+    const [projectDescription, setProjectDescription] = useState("");
     const [tasks, setTasks] = useState({});
+    const [projectStatus, setProjectStatus] = useState("");
 
     // Récupérer le nom du projet
     const { project_id } = useParams();
@@ -29,6 +31,8 @@ export default function Project() {
                 if (data.type === "error") {
                 } else {
                     setProjectName(data.content.name);
+                    setProjectDescription(data.content.description)
+                    setProjectStatus(data.content.status)
                     setTasks(data.content.tasks)
                 }
             })
@@ -38,6 +42,10 @@ export default function Project() {
     useEffect(() => {
         refreshProject();
     }, [])
+
+    const statusClassName = () => (
+        projectStatus.replace(" ", "_").toLowerCase()
+    )
 
     // Si les données ont été chargées
     if (Object.keys(tasks).length === 0) {
@@ -148,8 +156,10 @@ export default function Project() {
         return (
             <main>
                 <div className="project-page">
-                    <div className="project-meta">
+                    <div className={`project-meta ${statusClassName()}`}>
                         <h2 className="project-name">{project_name}</h2>
+                        <p className="project-description">{projectDescription}</p>
+                        <p className="project-status">{projectStatus}</p>
                     </div>
 
                     <div className="project-content">
